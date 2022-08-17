@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CRUD</string>
+    <string name="utang_list">Utang List</string>
+</resources>
