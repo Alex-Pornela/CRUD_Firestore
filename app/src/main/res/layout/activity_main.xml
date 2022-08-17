@@ -28,14 +28,18 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/addAccountBtn"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/addAccountBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintVertical_bias="0.110000014" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addAccountBtn"
@@ -48,10 +52,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.936"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.954"
         app:maxImageSize="30dp"
-        app:tint="@color/color_bg" />
+        app:tint="@color/color_bg"
+        tools:ignore="ContentDescription" />
 
 
 

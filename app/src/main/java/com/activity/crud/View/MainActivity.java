@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -17,18 +19,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.activity.crud.Adapter.AccountAdapter;
-import com.activity.crud.Firestore.AccountRepository;
 import com.activity.crud.Model.Account;
 import com.activity.crud.R;
-import com.activity.crud.ViewModel.AccountViewModel;
 import com.activity.crud.ViewModel.MyViewModel;
 import com.activity.crud.databinding.ActivityMainBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -38,13 +35,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AccountAdapter.OnItemClicked {
 
     private ActivityMainBinding binding;
-    LinearLayoutManager linearLayoutManager;
-    AccountViewModel accountViewModel;
     AccountAdapter accountAdapter;
     List<Account> accountDataList = new ArrayList<>();
     FirebaseFirestore firestore;
     ProgressDialog progressDialog;
-    private FirestoreRecyclerOptions<Account> options;
     MyViewModel myViewModel;
 
 
@@ -76,9 +70,10 @@ public class MainActivity extends AppCompatActivity implements AccountAdapter.On
 
     private void loadDataOnRecyclerview() {
         binding.recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
-        binding.recyclerView.setHasFixedSize( true );
-        accountAdapter = new AccountAdapter( this );
+
+        accountAdapter = new AccountAdapter( this , this);
         binding.recyclerView.setAdapter( accountAdapter );
+        binding.recyclerView.setItemAnimator( null );
         myViewModel = new ViewModelProvider( this ).get( MyViewModel.class );
         myViewModel.getLiveDataFromFirestore().observe( this, new Observer<List<Account>>() {
             @SuppressLint("NotifyDataSetChanged")
