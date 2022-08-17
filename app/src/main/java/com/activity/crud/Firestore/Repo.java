@@ -32,7 +32,7 @@ public class Repo {
 
     public void  getDataFromFirestore(){
         CollectionReference reference = firestore.collection("Account Name");
-        reference.addSnapshotListener( new EventListener<QuerySnapshot>() {
+        reference.orderBy( "Amount", Query.Direction.ASCENDING ).addSnapshotListener( new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
@@ -46,7 +46,9 @@ public class Repo {
                     onDataAdded.accountDataAdded( list );
                 }
             }
+
         } );
+
     }
 
 

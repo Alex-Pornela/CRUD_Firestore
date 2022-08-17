@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +26,9 @@ import com.activity.crud.databinding.ActivityMainBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -38,11 +42,12 @@ public class MainActivity extends AppCompatActivity implements AccountAdapter.On
     AccountViewModel accountViewModel;
     AccountAdapter accountAdapter;
     List<Account> accountDataList = new ArrayList<>();
-    private  int numOfAccount = 1;
     FirebaseFirestore firestore;
     ProgressDialog progressDialog;
     private FirestoreRecyclerOptions<Account> options;
     MyViewModel myViewModel;
+
+
 
 
     @Override
@@ -50,13 +55,14 @@ public class MainActivity extends AppCompatActivity implements AccountAdapter.On
         super.onCreate( savedInstanceState );
         binding = ActivityMainBinding.inflate( getLayoutInflater() );
         setContentView( binding.getRoot() );
-
+        getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
 
         firestore = FirebaseFirestore.getInstance();
 
+        //get data from Firestore
         loadDataOnRecyclerview( );
 
-
+        //FloatingActionButton
         binding.addAccountBtn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,18 +86,15 @@ public class MainActivity extends AppCompatActivity implements AccountAdapter.On
             public void onChanged(List<Account> accountList) {
                 accountDataList = accountList;
 
-                loadRecyclerView(accountList);
+                accountAdapter.updateAdapter(accountList );
             }
         } );
     }
 
-    private void loadRecyclerView(List<Account> accountList) {
-        accountAdapter.updateAdapter(accountList );
-    }
 
     private void addAccount() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Set New Goal");
+        builder.setTitle("Add New Account");
 
         View viewInflated = getLayoutInflater().inflate( R.layout.add_user_layout, null );
         EditText userName = viewInflated.findViewById( R.id.userName );
@@ -104,12 +107,16 @@ public class MainActivity extends AppCompatActivity implements AccountAdapter.On
             public void onClick(DialogInterface dialog, int which) {
                 String name = userName.getText().toString();
                 String dateCreated = date.getText().toString();
+                String id = firestore.collection("Account Name").document().getId();
+                int amount = 0;
 
 
                 HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put( "No", numOfAccount++ );
+                //hashMap.put( "No", amount );
+                hashMap.put( "Amount", amount );
                 hashMap.put( "Name" , name );
                 hashMap.put( "Date", dateCreated );
+                hashMap.put("id", id);
 
                 progressDialog.setMessage( "Adding Account" );
                 progressDialog.show();
@@ -118,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements AccountAdapter.On
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
+
                             loadDataOnRecyclerview();
                             progressDialog.dismiss();
                             Toast.makeText(MainActivity.this, "Account successfully added.", Toast.LENGTH_SHORT).show();

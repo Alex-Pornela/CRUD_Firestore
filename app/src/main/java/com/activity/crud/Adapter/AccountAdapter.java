@@ -43,9 +43,11 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-        String no = String.valueOf( accountList.get( position ).getNo() );
-        //holder.numOfList.setText( no) ;
+        String no = String.valueOf( accountList.get( position ).getAmount() );
+        holder.numOfList.setText(no );
+
         holder.name.setText( accountList.get( position ).getName() );
+        holder.userID.setText( accountList.get( position ).getId() );
     }
 
 

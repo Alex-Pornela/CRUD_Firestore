@@ -4,31 +4,40 @@ import java.util.Date;
 
 public class Account {
     private String id;
-    private int No;
     private String Name;
-    private Double totalAmount;
+    private int totalAmount;
     private String itemName;
     private String Date;
     private Double itemPrice;
+    private int Amount;
 
     Account(){
     }
 
     //Main list
-    public Account(String id, String Name, Double totalAmount,int No) {
+    public Account(String id, String Name, int totalAmount,int Amount) {
         this.id = id;
         this.Name = Name;
         this.totalAmount = totalAmount;
-        this.No = No;
+        this.Amount = Amount;
     }
     //Account info
-    public Account(String id, String Name, Double totalAmount, String itemName, String date, Double itemPrice) {
+    public Account(String id, String Name, int totalAmount, String itemName, String date, Double itemPrice, int Amount) {
         this.id = id;
         this.Name = Name;
         this.totalAmount = totalAmount;
         this.itemName = itemName;
         this.Date = Date;
         this.itemPrice = itemPrice;
+        this.Amount = Amount;
+    }
+
+    public int getAmount() {
+        return Amount;
+    }
+
+    public void setAmount(int amount) {
+        Amount = amount;
     }
 
     public String getId() {
@@ -40,14 +49,6 @@ public class Account {
     }
 
 
-    public int getNo() {
-        return No;
-    }
-
-    public void setNo(int no) {
-        No = no;
-    }
-
     public String getName() {
         return Name;
     }
@@ -56,11 +57,11 @@ public class Account {
         Name = name;
     }
 
-    public Double getTotalAmount() {
+    public int getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Double totalAmount) {
+    public void setTotalAmount(int totalAmount) {
         this.totalAmount = totalAmount;
     }
 
