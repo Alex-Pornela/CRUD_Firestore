@@ -1,9 +1,8 @@
 package com.activity.crud.Model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Account implements Serializable {
+public class Account {
     private String id;
     private String Name;
     private int totalAmount;

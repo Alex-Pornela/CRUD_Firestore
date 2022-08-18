@@ -43,6 +43,4 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:24.2.2'
     // FirebaseUI for Cloud Firestore
     implementation 'com.firebaseui:firebase-ui-firestore:8.0.1'
-    //swipe library
-    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 }
