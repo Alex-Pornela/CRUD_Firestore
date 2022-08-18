@@ -54,7 +54,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull myViewHolder holder,  int position) {
         String no = String.valueOf( accountList.get( position ).getAmount() );
         holder.numOfList.setText(no );
         String accountName = accountList.get( position ).getName();
@@ -65,14 +65,22 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
         viewBinderHelper.setOpenOnlyOne( true );
         viewBinderHelper.bind( holder.swipeRevealLayout, String.valueOf( accountList.get( position ).getName() ));
 
-        holder.name.setOnClickListener( new View.OnClickListener() {
+       /* holder.tvDelete.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accountList.remove(accountList.get( position ));
+                notifyItemRemoved( holder.getAbsoluteAdapterPosition() );
+            }
+        } );*/
+
+        /*holder.name.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AccountInfo.class );
                 intent.putExtra( "model", accountName) ;
                 context.startActivity( intent );
             }
-        } );
+        } );*/
     }
 
 
@@ -103,6 +111,12 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
             tvEdit = itemView.findViewById( R.id.tvEdit );
             tvDelete = itemView.findViewById( R.id.tvDelete );
 
+            tvDelete.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            } );
 
             
             tvEdit.setOnClickListener( new View.OnClickListener() {
@@ -111,12 +125,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
                     Toast.makeText( context.getApplicationContext(), "Edit Clicked", Toast.LENGTH_SHORT ).show();
                 }
             } );
-            tvDelete.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText( context, "Delete Clicked", Toast.LENGTH_SHORT ).show();
-                }
-            } );
+
         }
     }
 
