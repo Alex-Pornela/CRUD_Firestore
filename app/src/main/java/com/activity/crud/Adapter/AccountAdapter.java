@@ -14,13 +14,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.activity.crud.AccountInfo;
 import com.activity.crud.Model.Account;
 import com.activity.crud.R;
-import com.activity.crud.View.AccountInfo;
+
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
 
@@ -34,6 +42,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
     OnItemClicked onItemClicked;
     Context context;
     private final ViewBinderHelper viewBinderHelper  = new ViewBinderHelper();
+
 
     public AccountAdapter(OnItemClicked itemClicked, Context context){
         this.onItemClicked = itemClicked;
@@ -50,11 +59,11 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from( parent.getContext() ).inflate( R.layout.list_item,parent,false);
-        return new myViewHolder( view );
+        return new myViewHolder( view ).linkAdapter(this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull myViewHolder holder,  int position) {
+    public void onBindViewHolder(@NonNull myViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String no = String.valueOf( accountList.get( position ).getAmount() );
         holder.numOfList.setText(no );
         String accountName = accountList.get( position ).getName();
@@ -65,22 +74,46 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
         viewBinderHelper.setOpenOnlyOne( true );
         viewBinderHelper.bind( holder.swipeRevealLayout, String.valueOf( accountList.get( position ).getName() ));
 
-       /* holder.tvDelete.setOnClickListener( new View.OnClickListener() {
+        holder.userID.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                accountList.remove(accountList.get( position ));
-                notifyItemRemoved( holder.getAbsoluteAdapterPosition() );
+                if(onItemClicked != null){
+                    onItemClicked.accountClicked(  position);
+                }
             }
-        } );*/
+        } );
 
-        /*holder.name.setOnClickListener( new View.OnClickListener() {
+        holder.tvDelete.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, AccountInfo.class );
-                intent.putExtra( "model", accountName) ;
-                context.startActivity( intent );
+                    if(onItemClicked != null){
+                        onItemClicked.accountDelete( (position));
+                        accountList.remove( position );
+                        notifyItemRemoved( position );
+                        notifyItemRangeChanged(position, accountList.size());
+                    }
             }
-        } );*/
+        } );
+
+        holder.tvEdit.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onItemClicked != null){
+                    onItemClicked.accountEdit( position );
+                }
+            }
+        } );
+
+
+
+        holder.name.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onItemClicked != null){
+                    onItemClicked.accountClicked( position );
+                }
+            }
+        } );
     }
 
 
@@ -100,6 +133,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
         SwipeRevealLayout swipeRevealLayout;
         TextView tvEdit;
         TextView tvDelete;
+        AccountAdapter accountAdapter;
 
         public myViewHolder(@NonNull View itemView) {
             super( itemView );
@@ -111,26 +145,20 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
             tvEdit = itemView.findViewById( R.id.tvEdit );
             tvDelete = itemView.findViewById( R.id.tvDelete );
 
-            tvDelete.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        }
 
-                }
-            } );
 
-            
-            tvEdit.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText( context.getApplicationContext(), "Edit Clicked", Toast.LENGTH_SHORT ).show();
-                }
-            } );
 
+        public myViewHolder linkAdapter(AccountAdapter accountAdapter) {
+            this.accountAdapter = accountAdapter;
+            return this;
         }
     }
 
     public interface OnItemClicked{
         void accountClicked(int position);
+        void accountDelete(int position);
+        void accountEdit( int position);
     }
 
 

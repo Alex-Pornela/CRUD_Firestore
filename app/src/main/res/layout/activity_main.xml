@@ -33,7 +33,6 @@
         android:layout_marginTop="70dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/addAccountBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -56,7 +55,9 @@
         app:layout_constraintVertical_bias="0.954"
         app:maxImageSize="30dp"
         app:tint="@color/color_bg"
-        />
+        android:clickable="true"
+        tools:ignore="ContentDescription"
+        android:focusable="true" />
 
 
 
