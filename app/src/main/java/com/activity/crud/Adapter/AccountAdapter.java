@@ -1,52 +1,40 @@
 package com.activity.crud.Adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Parcelable;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.activity.crud.AccountInfo;
 import com.activity.crud.Model.Account;
 import com.activity.crud.R;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.material.imageview.ShapeableImageView;
 
-import org.w3c.dom.Text;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHolder>  {
 
     private List<Account> accountList;
     OnItemClicked onItemClicked;
-    Context context;
     private final ViewBinderHelper viewBinderHelper  = new ViewBinderHelper();
+    CardView cardView;
 
 
-    public AccountAdapter(OnItemClicked itemClicked, Context context){
+    public AccountAdapter(OnItemClicked itemClicked, List<Account> accountList){
         this.onItemClicked = itemClicked;
-        this.context = context;
+        this.accountList = accountList;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -60,11 +48,22 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from( parent.getContext() ).inflate( R.layout.list_item,parent,false);
         return new myViewHolder( view ).linkAdapter(this);
-    }
+}
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        String no = String.valueOf( accountList.get( position ).getAmount() );
+
+        Random r = new Random();
+        int red=r.nextInt(255 - 0 + 1)+0;
+        int green=r.nextInt(255 - 0 + 1)+0;
+        int blue=r.nextInt(255 - 0 + 1)+0;
+
+
+        GradientDrawable draw = new GradientDrawable();
+        draw.setShape(GradientDrawable.OVAL);
+        draw.setColor(Color.rgb(red,green,blue));
+
+        String no = String.valueOf( accountList.get( position ).getTotalAmount() );
         holder.numOfList.setText(no );
         String accountName = accountList.get( position ).getName();
 
@@ -74,15 +73,22 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
         viewBinderHelper.setOpenOnlyOne( true );
         viewBinderHelper.bind( holder.swipeRevealLayout, String.valueOf( accountList.get( position ).getName() ));
 
+        holder.charBg.setBackground(draw);
+        String firstCharacter = accountName.substring( 0,1 );
+        holder.firstChar.setText( firstCharacter );
+
+        holder.name.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClicked.accountClicked( position );
+            }
+        } );
         holder.userID.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(onItemClicked != null){
-                    onItemClicked.accountClicked(  position);
-                }
+                onItemClicked.accountClicked( position );
             }
         } );
-
         holder.tvDelete.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,16 +110,6 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
             }
         } );
 
-
-
-        holder.name.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(onItemClicked != null){
-                    onItemClicked.accountClicked( position );
-                }
-            }
-        } );
     }
 
 
@@ -134,6 +130,8 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
         TextView tvEdit;
         TextView tvDelete;
         AccountAdapter accountAdapter;
+        TextView firstChar;
+        ImageView charBg;
 
         public myViewHolder(@NonNull View itemView) {
             super( itemView );
@@ -144,6 +142,8 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.myViewHo
             swipeRevealLayout = itemView.findViewById( R.id.swipeLayout );
             tvEdit = itemView.findViewById( R.id.tvEdit );
             tvDelete = itemView.findViewById( R.id.tvDelete );
+            firstChar = itemView.findViewById( R.id.firstChar );
+            charBg = itemView.findViewById( R.id.charBg );
 
         }
 

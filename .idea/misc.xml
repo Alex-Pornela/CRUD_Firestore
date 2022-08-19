@@ -3,11 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/drawable/add_btn_bg.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/drawable/amount_bg.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/drawable/cancel_btn.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/drawable/card_bg.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/drawable/circle_bg.xml" value="0.22291666666666668" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.22291666666666668" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/drawable/ic_reminder.xml" value="0.22291666666666668" />
         <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/drawable/list_number_bg.xml" value="0.22291666666666668" />
-        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/add_user_layout.xml" value="0.19202898550724637" />
-        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/list_item.xml" value="0.5" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/account_item_list.xml" value="0.33" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/activity_account_info.xml" value="0.19202898550724637" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/add_item_info.xml" value="0.19202898550724637" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/add_layout_account.xml" value="0.22" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/add_layout_item.xml" value="0.20244565217391305" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/add_user_layout.xml" value="0.22" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/layout/list_item.xml" value="0.33" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/CRUD/app/src/main/res/menu/bottom_menu.xml" value="0.20677083333333332" />
       </map>
     </option>
   </component>

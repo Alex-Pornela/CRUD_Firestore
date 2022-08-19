@@ -2,8 +2,9 @@ package com.activity.crud.Model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class Account  {
+public class Account implements Serializable {
     private String id;
     private String Name;
     private int totalAmount;
@@ -11,8 +12,15 @@ public class Account  {
     private String Date;
     private Double itemPrice;
     private int Amount;
+    private String itemId;
+    private  String itemDate;
+    List<Account> accountList;
 
-    Account(){
+    public Account(){
+    }
+
+    public Account(List<Account> accountList){
+        this.accountList = accountList;
     }
 
     //Main list
@@ -23,14 +31,12 @@ public class Account  {
         this.Amount = Amount;
     }
     //Account info
-    public Account(String id, String Name, int totalAmount, String itemName, String date, Double itemPrice, int Amount) {
-        this.id = id;
-        this.Name = Name;
-        this.totalAmount = totalAmount;
+    public Account(String itemName, String itemId, int Amount, String itemDate) {
+        this.id = itemId;
         this.itemName = itemName;
-        this.Date = Date;
-        this.itemPrice = itemPrice;
         this.Amount = Amount;
+        this.itemId = itemId;
+        this.itemDate = itemDate;
     }
 
     public int getAmount() {
@@ -39,6 +45,22 @@ public class Account  {
 
     public void setAmount(int amount) {
         Amount = amount;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getItemDate() {
+        return itemDate;
+    }
+
+    public void setItemDate(String itemDate) {
+        this.itemDate = itemDate;
     }
 
     public String getId() {

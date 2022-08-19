@@ -23,10 +23,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Repo {
+public class Repo extends Account {
 
     OnDataAdded onDataAdded;
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
 
 
     public Repo(OnDataAdded onDataAdded) {
@@ -35,7 +36,7 @@ public class Repo {
 
     public void  getDataFromFirestore(){
         CollectionReference reference = firestore.collection("Account Name");
-        reference.orderBy( "Name", Query.Direction.DESCENDING).addSnapshotListener( new EventListener<QuerySnapshot>() {
+        reference.orderBy( "totalAmount", Query.Direction.DESCENDING).addSnapshotListener( new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
